@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title><%= content_for?(:title) ? yield(:title) : ("Athena Admin") %></title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<%= stylesheet_link_tag  "admin", media: "all", "data-turbolinks-track" => true %>
+		<%= csrf_meta_tags %>
+		<%= javascript_include_tag "admin", "data-turbolinks-track" => true %>
+		<%= favicon_link_tag 'e.ico' %>
+		
+	</head>
+	<body>
+		<header id="header" class="navbar navbar-static-top bs-docs-nav" role="banner">
+			<div class="container header_container">
+				<div class="navbar-header">
+					<button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target=".bs-navbar-collapse">
+						<span class="sr-only">Athena</span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+					</button>
+					<%#= link_to image_tag("logo.png"), admin_root_path , class: "navbar-brand logo" %>
+					<%= link_to "ATHENA ADMIN", admin_root_path , class: "navbar-brand logo" %>
+				</div>
+				<nav class="navbar-collapse bs-navbar-collapse collapse" role="navigation">
+					<ul class="nav navbar-nav pull-right" style="padding-top: 9px; background-color: black; overflow: hidden;" >
+						<% if admin_signed_in? %>
+							<li <%= 'class=active' if @controller.include?("home") %>>
+								<%= link_to "Dashboard", admin_root_path %>
+							</li>
+							<li <%= 'class=active' if @controller.include?("esa_types") %>>
+								<%= link_to "ESA type", admin_esa_types_path %>
+							</li>
+							<li <%= 'class=active' if @controller.include?("esas") %>>
+								<%= link_to "ESA", admin_esas_path %>
+							</li>
+							<li <%= 'class=active' if @controller.include?("areas") %>>
+								<%= link_to "Area", admin_areas_path %>
+							</li>
+							<li <%= 'class=active' if @controller.include?("items") %>>
+								<%= link_to "Area item", admin_items_path %>
+							</li>
+							<li <%= 'class=active' if @controller.include?("recommendations") %>>
+								<%= link_to "Area recommendation", admin_recommendations_path %>
+							</li>
+							<li <%= 'class=active' if @controller.include?("steps") %>>
+								<%= link_to "Step", admin_steps_path %>
+							</li>
+						
+							
+						<% end %>
+					</ul>
+				</nav>
+			</div>
+		</header>
+
+		<% if admin_signed_in? %>
+			<div class="row">
+				<div class="col-md-4 col-md-offset-8">
+					<div class="btn-group">
+						<button type="button" class="btn btn-default"><span class="glyphicon glyphicon-user"></span> <%= current_admin.full_name %></button>
+						<button type="button" class="btn btn-default"><%= link_to "Log Out", destroy_admin_session_path, method: :delete, :class => 'navbar-link'  %></button>
+					</div>
+				</div>
+			</div>
+		<% end %>
+		
+		<% if admin_signed_in? %>
+			<%= render partial: "layouts/admin_panel" %>
+		<% else %>
+			<%= render partial: "layouts/admin_login" %>
+		<% end %>
+
+	</body>
+</html>

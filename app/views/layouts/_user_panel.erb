@@ -1,0 +1,13 @@
+<% if @controller.include?("recommendations") %>
+<%= render partial: "layouts/menu_panel" %>
+<% end %>
+<%= yield %>
+<br>
+<div class="container-fluid text-center" style="font-size: 85%">
+  <div class="row">
+    <%= link_to('Energy Saving Actions', front_root_path, :class => 'clean') %>
+  </div>
+  <div class="row" style="margin: 5px">
+    <%= link_to('Logout', destroy_user_session_path, :method => :delete, :class => 'clean') %>
+  </div>
+</div>

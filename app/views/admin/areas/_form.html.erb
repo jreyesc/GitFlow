@@ -1,0 +1,50 @@
+<% str_method = @int_page_type == 2 ? 'put' : 'post'%>
+<% str_path = @int_page_type == 2 ? admin_area_path : admin_areas_path %>
+
+<div class="row">
+  <%= form_for(@area, url: str_path, method: str_method, html: {id: "form_area", class: "form-horizontal", role: "form"}) do |f| %>
+    <fieldset>
+      <legend>Information</legend>
+      <div class="form-group">
+        <%= f.label :title, class: "col-sm-2 control-label" %>
+        <%= set_label_obligatory(false) %>
+        <div class="col-sm-8">
+          <%= f.text_field :title, class: "form-control validate[#{set_validate(false)}]" %>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= f.label :esa_id, class: "col-sm-2 control-label" %>
+        <%= set_label_obligatory(Area.null?('esa_id')) %>
+        <div class="col-sm-8">
+          <%= f.select :esa_id, options_for_select(@esas.collect{ |u| [u.title, u.id] }, :selected => @esa.id), {}, { :class => 'form-control' } %>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= f.label :icon_image, "Image", class: "col-sm-2 control-label" %>
+        <%= set_label_obligatory(false) %>
+        <% if @int_page_type == 0 %>
+          <%= f.file_field :icon_image , class: "col-sm-8 validate[#{set_validate(false)}] nested-file"%>
+        <% else %>
+          <%= f.file_field :icon_image , class: "col-sm-8 nested-file"%>
+          <div id="image-esa-preview">
+            <%= image_tag @area.icon_image.url, width: "200"%>
+          </div>
+        <% end %>
+      </div>
+      <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+          <div class="checkbox">
+            <label>
+              <%= f.check_box :reachability %>Ask for reachability?
+            </label>
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-8">
+          <%= render partial: "buttons" %>
+        </div>
+      </div>
+    </fieldset>
+  <% end %>
+</div>

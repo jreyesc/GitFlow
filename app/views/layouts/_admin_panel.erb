@@ -1,0 +1,17 @@
+<div id="content">
+  <section class="container">
+    <div class="row">
+      <section id="main" class="col-md-12">
+        <div id="sign_in_container">
+          <fieldset class="title_border">
+            <%= render partial: "layouts/url_helpers" %>
+            <%= render partial: "alert_messages" %>
+            <%= yield %>
+          </fieldset>
+        </div>
+      </section>
+    </div>
+    <br />
+    <br />
+  </section>
+</div>

@@ -1,0 +1,24 @@
+<div class='checkbox expandable <%= "hide" if expanded == 1 %>'>
+	<label>
+		<% i = index.to_i
+		if item.energy_value.nil? %>
+			<span class='glyphicon glyphicon-chevron-right'></span>
+			<%= item.name %>
+		<% else %>
+			<%= check_box_tag item.id, 'yes', false, class: 'send_email'%><%= item.name %>
+		<% end %>
+	</label>
+	<% unless item.max_sockets.nil? %>
+		<div class='checkbox sockets hide'>Needs how many electrical sockets?<br>
+			<% for j in 1..item.max_sockets %>
+				<%= radio_button_tag("sockets_#{i}", j, false, :id => "sockets_#{j}_#{j*i}") %>
+				<%= label_tag("sockets_#{j}_#{j*i}", j) %>
+			<% end %>
+		</div>
+	<% i += 1
+	end
+	index.replace i.to_s
+	for it in item.items %>
+		<%= render partial: "front/areas/item", locals: { item: it, index: index, expanded: 1 } %>
+	<% end %>
+</div>

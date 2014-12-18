@@ -1,0 +1,32 @@
+<%= render partial: "subtitle", locals: { subtitle: 'You can help:' } %>
+<style>
+	p{
+		margin: 0 0 5px;
+	}
+</style>
+<div class="row step white">
+	<div class="circle">1</div>
+	<p>Share this action with your friends and followers.</p>
+	<p class="text-center">
+		<a href="#" onclick="postToFeed('<%=@esa.title%>','<%=@esa.title%>','<%=@esa.main_image.url(:thumb)%>'); return false;">
+			<%= image_tag("facebook.png") %>
+		</a>
+		<a class="twitterPopup" href="https://twitter.com/share?url=http://development.tektonlabs.com/athena_development&text=Athena:">
+			<%= image_tag("twitter.png") %>
+		</a>
+	</p><%= twitter_script %>
+</div>
+<div class="row step white">
+	<div class="circle">2</div>
+	<p>Sign our Change.org petition to require new electronics to use less standby power <a href="<%= @esa.petition_link %>" target="_blank">See Petition > </a></p>
+</div>
+<div class="row step"></div>
+<div class="row">
+	<div class="col-xs-12 col-md-6 col-md-offset-3">
+		<%= link_to front_congratulation_path(@area.id,:recommendation => @recommendation.id) do%>
+			<div class="btn btn-primary btn-block btn_submit">
+				Done
+			</div>
+		<% end %>
+	</div>
+</div>

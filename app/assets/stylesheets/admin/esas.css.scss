@@ -1,0 +1,23 @@
+// Place all the styles related to the admin::esas controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+hash_buttons
+
+#menu_hash{
+	margin-top:80px;
+}
+
+.hash_buttons{
+    border: 2px solid;
+    border-radius: 5px;
+    margin-top:8px;
+    color: white;
+	background-color: #428bca;
+	border-color: #357ebd;
+	cursor: pointer;
+}
+
+.hash_buttons:hover {
+   background: #357ebd;
+}

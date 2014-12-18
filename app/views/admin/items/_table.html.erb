@@ -1,0 +1,137 @@
+<% unless @area.nil? %>
+  <div class="row">
+    <div class="pull-right col-xs-12 col-md-2 text-center">
+      <button id="new_item" type="button" class="btn btn-primary btn-add">New item</button>
+    </div>
+  </div>
+  <br>
+  <% if @items.size > 0 %>
+    <table class="table table-striped" id="sortable">
+      <thead>
+        <tr>
+          <th width="85%">Name</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% for item in @items %>
+          <tr data-item-id=<%= "#{item.id}" %> data-area-id=<%= "#{@area.id}" %> class="item">
+            <td colspan="2">
+              <table class="table table-striped">
+                <tbody>
+                  <%= render partial: "admin/items/row", locals: { item: item, tab: 0 } %>
+                </tbody>
+              </table>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+    <script>
+      $(document).ready(items_sorted)
+      $(document).on('page:load', items_sorted)
+    </script>
+  <%else%>
+    <p>No ITEMS found</p>
+  <%end%>
+  <div class="modal fade">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+          <h4 class="modal-title">Item</h4>
+        </div>
+        <div class="modal-body">
+          <%= form_tag admin_items_path, role: 'form', class: 'form-horizontal', style: 'margin: 0' do %>
+            <input type="hidden" name="area_id" id="area_id" class="form-control" value="<%= @area.id %>">
+            <input type="hidden" name="parent_id" id="parent_id" class="form-control">
+            <input type="hidden" name="id" id="id" class="form-control">
+            <div class="form-group">
+              <label for="name" class="col-sm-3 control-label">Name</label>
+              <div class="input-group col-sm-9">
+                <input type="text" name="name" id="name" class="form-control" placeholder="name">
+                <div class="input-group-addon">*</div>
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="col-sm-offset-3 col-sm-9">
+                <div class="checkbox">
+                  <label>
+                    <input name="itemCollapsable" id="itemCollapsable" type="checkbox"> Collapsible
+                  </label>
+                </div>
+              </div>
+            </div>
+            <div id="max_sockets_div" class="form-group">
+              <label for="max_sockets" class="col-sm-3 control-label">Sockets</label>
+              <div class="col-sm-9">
+                <input type="number" name="max_sockets" id="max_sockets" class="form-control" placeholder="sockets" min="1" max="5">
+              </div>
+            </div>
+            <div id="energy_value_div" class="form-group">
+              <label for="energy_value" class="col-sm-3 control-label">Energy value (KWh/year)</label>
+              <div class="input-group col-sm-9">
+                <input type="number" name="energy_value" id="energy_value" class="form-control" placeholder="energy value" min="0">
+                <div class="input-group-addon">*</div>
+              </div>
+            </div>
+            <div id="disabled_item_div" class="form-group">
+              <label for="disabled_item" class="col-sm-3 control-label">Item to disable:</label>
+              <div class="col-sm-9">
+                <%= select_tag "disabled_item", options_from_collection_for_select(@items, "id", "name",(@disabled_item.id unless @disabled_item.nil?)), {:prompt => "Select item", :class => 'form-control'}%>
+              </div>
+            </div>
+            <button type="button" class="btn btn-default col-sm-offset-3" data-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-primary">Submit</button>
+          <% end %>
+        </div>
+      </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+  </div>
+  <script>
+    $(document).on("click", ".btn-add", function () {
+      var myItemId = $(this).data('id');
+      $(".modal-body #parent_id").val(myItemId);
+      $(".modal-body #id").val('');
+      $(".modal-body #name").val('');
+      $(".modal-body #itemCollapsable").prop('checked', false);
+      $(".modal-body #max_sockets").val('');
+      $(".modal-body #max_sockets_div").removeClass("hide");
+      $(".modal-body #energy_value").val('');
+      $(".modal-body #energy_value_div").removeClass("hide");
+      $(".modal-body #disabled_item").val('');
+      $(".modal-body #disabled_item_div").removeClass("hide");
+      $('.modal').modal('show');
+    });
+    $(document).on("click", ".btn-edit", function () {
+      var myItemId = $(this).data('id');
+      var myItemName = $(this).data('name');
+      var myItemSockets = $(this).data('sockets');
+      var myItemEnergy = $(this).data('energy');
+      var myItemDisabled = $(this).data('disabled');
+      $(".modal-body #parent_id").val('');
+      $(".modal-body #id").val(myItemId);
+      $(".modal-body #name").val(myItemName);
+      $(".modal-body #itemCollapsable").prop('checked', (myItemEnergy == ''));
+      $(".modal-body #max_sockets").val(myItemSockets)
+      $(".modal-body #max_sockets_div").removeClass("hide");
+      $(".modal-body #energy_value").val(myItemEnergy);
+      $(".modal-body #energy_value_div").removeClass("hide");
+      $(".modal-body #disabled_item").val(myItemDisabled);
+      $(".modal-body #disabled_item_div").removeClass("hide");
+      if (myItemEnergy == ''){
+        $(".modal-body #max_sockets_div").addClass("hide");
+        $(".modal-body #energy_value_div").addClass("hide");
+        $(".modal-body #disabled_item_div").addClass("hide");
+      }
+      $('.modal').modal('show');
+    });
+    $().ready(function(){
+      $("#itemCollapsable").click(function(){
+        $(".modal-body #max_sockets_div").toggleClass("hide");
+        $(".modal-body #energy_value_div").toggleClass("hide");
+        $(".modal-body #disabled_item_div").toggleClass("hide");
+      });
+    });
+  </script>
+<% end %>

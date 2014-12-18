@@ -1,0 +1,67 @@
+<% unless @esa.nil? %>
+  <legend>Message</legend>
+  <div class="row">
+    <%= form_for([:admin, @esa], html: {id: "form_esa", class: "form-inline", role: "form"}) do |f| %>
+      <div class="form-group col-sm-10">
+        <%= f.label :areas_message, class: "col-sm-2 control-label" %>
+        <%= set_label_obligatory(false) %>
+        <div class="col-sm-8">
+          <%= f.text_area :areas_message, class: "form-control validate[#{set_validate(false)}]", id: "areas_message" %>
+        </div>
+      </div>
+      <div class="form-group col-sm-2 text-center">
+        <%= submit_tag("Save", disable_with: "Saving", class: "btn btn-primary")%>
+      </div>
+    <% end %>
+  </div>
+  <br>
+  <legend>Areas</legend>
+  <div class="row">
+    <div class="pull-right col-xs-12 col-md-2 text-center">
+      <%= link_to  "New Area", [:new, :admin, @esa, :area] , class: "btn btn-primary" %>
+    </div>
+  </div>
+  <br>
+  <% if @areas.length > 0 %>
+    <table class="table table-striped" id="sortable">
+      <thead>
+        <tr>
+          <th>Title</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% for area in @areas %>
+          <tr data-item-id="<%= area.id %>" data-esa-id="<%= @esa.id %>" class="item">
+            <td><%= area.title %></td>
+            <td class="btn-rud">
+              <%= link_to '<i class="glyphicon glyphicon-search"></i>'.html_safe, admin_area_path(area), class: "btn btn-default btn-show", data: {toggle: "tooltip"}, title: "View" %>
+              <%= link_to '<i class="glyphicon glyphicon-pencil"></i>'.html_safe, edit_admin_area_path(area), {class: "btn btn-default btn-edit", data: {toggle: "tooltip"}, title: "Edit"} %>
+              <%= link_to '<i class="glyphicon glyphicon-remove"></i>'.html_safe, {action: 'destroy', id: area}, {method: "delete", class: "btn btn-default btn-remove", data: {toggle: "tooltip", confirm: "Are you sure to delete: '" + area.title + "'?"}, title: "Delete"} %>
+              <%= link_to '<i class="glyphicon glyphicon-asterisk"></i>'.html_safe, admin_area_items_path(area), {class: "btn btn-default btn-edit", data: {toggle: "tooltip"}, title: "Items"} %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+    <script>
+      $(document).ready(areas_sorted)
+      $(document).on('page:load', areas_sorted)
+
+      $('#areas_message').wysihtml5({
+        toolbar: {
+          "font-styles": false, //Font styling, e.g. h1, h2, etc. Default true
+          "emphasis": true, //Italics, bold, etc. Default true
+          "lists": false, //(Un)ordered lists, e.g. Bullets, Numbers. Default true
+          "html": true, //Button which allows you to edit the generated HTML. Default false
+          "link": false, //Button to insert a link. Default true
+          "image": false, //Button to insert an image. Default true,
+          "color": true, //Button to change color of font  
+          "blockquote": false, //Blockquote  
+        }
+      });
+    </script>
+  <% else %>
+    <p>No Areas found</p>
+  <% end %>
+<% end %>

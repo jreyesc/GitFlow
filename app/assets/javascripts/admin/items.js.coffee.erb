@@ -1,0 +1,47 @@
+# Place all the behaviors and hooks related to the matching controller here.
+# All this logic will automatically be available in application.js.
+# You can use CoffeeScript in this file: http://coffeescript.org/
+
+@items_sorted = ->
+  if $('#sortable').length > 0
+    table_width = $('#sortable').width()
+    $('.table tr').find('td:first').css('width', table_width*0.75)
+
+    $('#sortable').sortable(
+      axis: 'y'
+      items: '.item'
+      cursor: 'move'
+
+      sort: (e, ui) ->
+        ui.item.addClass('active-item-shadow')
+      stop: (e, ui) ->
+        ui.item.removeClass('active-item-shadow')
+        # highlight the row on drop to indicate an update
+        ui.item.children('td').effect('highlight', {}, 1000)
+      update: (e, ui) ->
+        item_id = ui.item.data('item-id')
+        area_id = ui.item.data('area-id')
+        console.log(item_id)
+        position = ui.item.index() # this will not work with paginated items, as the index is zero on every page
+        console.log(position)
+        $.ajax(
+          type: 'POST'
+          url: "<%= Rails.application.config.action_controller.relative_url_root.to_s %>" + '/admin/items/update_row_order'
+          dataType: 'json'
+          data: { item: {id: item_id, area_id: area_id, row_order: position } }
+        )
+    )
+
+$ ->
+  $(document).on 'change', '#esa_id', (evt) ->
+    $.ajax
+      url: window.update_areas_admin_items_path,
+      type: 'GET'
+      dataType: 'script'
+      data: {
+        esa_id: $("#esa_id option:selected").val()
+      }
+      error: (jqXHR, textStatus, errorThrown) ->
+        console.log("AJAX Error: #{textStatus}")
+      success: (data, textStatus, jqXHR) ->
+        console.log("Dynamic esa select OK!")

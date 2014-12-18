@@ -1,0 +1,42 @@
+<%= render partial: "title", locals: { image: @area.icon_image, title: "#{@area.title} #{@recommendation_by_user.name}" } %>
+
+<div class="row"><div class="col-xs-12 text-center">
+	<h2>Which of these are here?</h2>
+</div></div>
+<%= render partial: "alert_messages" %>
+<div class="row">
+	<div class="col-xs-12 col-md-4 col-md-offset-4">
+		<% index = '0' %>
+		<%= form_for([:front, @esa, @area], :html => {role: "form", :class => 'send_email'}) do |f| %>
+			<% group_item_id = @group_item.id %>
+			<%= hidden_field_tag(:group_item_id, group_item_id) %>
+			<% @items.each do |item| %>
+				<%= render partial: "front/areas/item_edit", locals: { item: item, index: index, expanded: 0, group_item_id: group_item_id } %>
+			<% end %>
+			<% if @area.reachability %>
+				<div class='checkbox'>
+					<label>
+						<%= check_box_tag :reachability, true, @group_item.reachability, class: 'send_email'%>Is the outlet easy to reach?
+					</label>
+				</div>
+			<% end %>
+			<div id="hidden_values">
+			</div>
+			<br>
+			<%= submit_tag "Done" , class: 'btn btn-primary col-xs-10 col-md-4 col-xs-offset-1 col-md-offset-4', :onclick => "return validateForm();" %>
+		<% end %>
+	</div>
+</div>
+<br>
+<div class="content_alert"></div>
+<br>
+
+<script>
+	$(document).ready(function (){
+		$('.expandable').each(function(){
+			if ($(this).find('input[type=checkbox]:checked').length > 0){
+				$(this).find('.hide').removeClass('hide');
+			}
+		});
+	});
+</script>

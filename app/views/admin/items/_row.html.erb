@@ -1,0 +1,18 @@
+<tr>
+	<td width="85%" style="width:85%;padding-left:<%=40*tab%>px"><%= item.name %></td>
+	<td class='btn-rud'>
+		<button type='button' class='btn btn-default btn-show btn-add' title='Add subitem' data-toggle='tooltip' data-id="<%= item.id %>" data-name="<%= item.name %>">
+			<i class='glyphicon glyphicon-plus'></i>
+		</button>
+		<button type='button' class='btn btn-default btn-edit' title='Edit' data-toggle='tooltip' data-id="<%= item.id %>" data-name="<%= item.name %>" data-sockets="<%= item.max_sockets %>" data-energy="<%= item.energy_value %>" data-disabled="<%= item.disabled_item %>">
+			<i class='glyphicon glyphicon-pencil'></i>
+		</button>
+		<a class='btn btn-default btn-remove' data-confirm="Do you want to delete: <%= item.name %>?" data-method='delete' data-toggle='tooltip' href="<%= admin_area_item_path(item.area, item) %>" rel='nofollow' title='Delete' data-original-title='Delete'>
+			<i class='glyphicon glyphicon-remove'></i>
+		</a>
+	</td>
+</tr>
+<% tab += 1
+for it in item.items %>
+	<%= render partial: "admin/items/row", locals: { item: it, tab: tab } %>
+<% end %>

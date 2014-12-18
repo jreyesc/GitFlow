@@ -1,0 +1,62 @@
+<style>
+  .content_entry{
+    width: 700px;
+    height: 240px;
+    max-height: 240px;
+    overflow: auto;
+    border: #CCCCCC 1px solid;
+  }
+
+  .highlight{
+    background-color: #CCCCCC;
+  }
+</style>
+<% str_method = @int_page_type == 2 ? 'put' : 'post'%>
+<% str_path = @int_page_type == 2 ? admin_step_path : admin_steps_path %>
+<div class="row">
+  <%= form_for(@step, url: str_path, method: str_method, html: {id: "form_step", class: "form-horizontal", role: "form"}) do |f| %>
+    <fieldset>
+      <legend>Information</legend>
+      <br>
+      <% unless @recommendation.nil? %>
+        <%= f.hidden_field :recommendation_id, value: @recommendation.id %>
+      <% end %>
+      <div class="form-group">
+        <label class="col-sm-2 control-label" for="step_description">Description<br><small> To insert an item, type '@'</small></label>
+        <%= set_label_obligatory(false) %>
+        <div class="col-sm-8">
+          <div class="content_entry wysihtml5" contenteditable="true" id="rich_textarea"></div>
+          <%= f.text_area :description, class: "hide form-control validate[#{set_validate(false)}]", id: "description_item" %>
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-8">
+          <%= render partial: "buttons" %>
+        </div>
+      </div>
+    </fieldset>
+  <% end %>
+</div>
+
+<div class="row">
+  
+</div>
+
+<script type="text/javascript">
+  $(document).ready(function(){
+    $('#rich_textarea').data("wysihtml5").editor.setValue($('#description_item').val());
+
+    $('#rich_textarea').rich_textarea({
+      triggers: [{
+        trigger: '@', callback: function(term, response){
+          var tags = <%= raw @recommendation_items_json.to_json %>;
+          response($.ui.autocomplete.filter(tags, term));
+        }
+      }]
+    });
+
+    $('#rich_textarea').bind('DOMNodeInserted DOMNodeRemoved keyup', function(){
+      $('#description_item').val($(this).data("wysihtml5").editor.getValue());
+    });
+  });
+</script>

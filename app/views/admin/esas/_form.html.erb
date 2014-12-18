@@ -1,0 +1,145 @@
+<% str_method = @int_page_type == 2 ? 'put' : 'post'%>
+<% str_path = @int_page_type == 2 ? admin_esa_path : admin_esas_path %>
+
+<div class="row">
+  <%= form_for(@esa, url: str_path, method: str_method, html: {id: "form_esa", class: "form-horizontal", role: "form"}) do |f| %>
+    <fieldset>
+      <legend>Information for main index</legend>
+      <div class="form-group">
+        <%= f.label :title, class: "col-sm-2 control-label" %>
+        <%= set_label_obligatory(false) %>
+        <div class="col-sm-8">
+          <%= f.text_field :title, class: "form-control validate[#{set_validate(false)}]" %>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= f.label :esa_type_id, class: "col-sm-2 control-label" %>
+        <%= set_label_obligatory(Area.null?('esa_id')) %>
+        <div class="col-sm-8">
+          <%= f.select :esa_type_id, @esa_types.collect{ |u| [u.name, u.id] }, {}, { :class => 'form-control' } %>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= f.label :main_image, "Image", class: "col-sm-2 control-label" %>
+        <%= set_label_obligatory(false) %>
+        <div class="col-sm-8">
+          <% if @int_page_type == 0 %>
+            <%= f.file_field :main_image , class: "validate[#{set_validate(false)}] nested-file"%>
+          <% else %>
+            <%= f.file_field :main_image , class: " nested-file"%>
+            <div id="image-esa-preview">
+              <%= image_tag @esa.main_image.url, width: "200"%>
+            </div>
+          <% end %>
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+          <div class="checkbox">
+            <label>
+              <%= f.check_box :flag_show %> Visible
+            </label>
+          </div>
+        </div>
+      </div>
+      <legend>Sections for landing page</legend>
+      <div class="form-group">
+        <%= f.label :first_section_msj, "First Section", class: "col-sm-2 control-label" %>
+        <%= set_label_obligatory(Esa.null?('first_section_msj')) %>
+        <div class="col-sm-8">
+          <%= f.text_area :first_section_msj, class: "form-control validate[#{set_validate(Esa.null?("first_section_msj"))}] wysihtml5", id: "first_section_msj" %>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= f.label :first_section_img, "Image", class: "col-sm-2 control-label" %>
+        <%= set_label_obligatory(true) %>
+        <div class="col-sm-8">
+          <% if @int_page_type == 0 %>
+            <%= f.file_field :first_section_img , class: "validate[#{set_validate(true)}] nested-file"%>
+          <% else %>
+            <%= f.file_field :first_section_img , class: " nested-file"%>
+            <div id="image-esa-preview">
+              <%= image_tag @esa.first_section_img.url, width: "200"%>
+            </div>
+          <% end %>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= f.label :second_section_msj, "Second Section", class: "col-sm-2 control-label" %>
+        <%= set_label_obligatory(Esa.null?('second_section_msj')) %>
+        <div class="col-sm-8">
+          <%= f.text_area :second_section_msj, class: "form-control validate[#{set_validate(Esa.null?("second_section_msj"))}] wysihtml5",id: "second_section_msj" %>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= f.label :second_section_img, "Image", class: "col-sm-2 control-label" %>
+        <%= set_label_obligatory(true) %>
+        <div class="col-sm-8">
+          <% if @int_page_type == 0 %>
+            <%= f.file_field :second_section_img , class: "validate[#{set_validate(true)}] nested-file"%>
+          <% else %>
+            <%= f.file_field :second_section_img , class: " nested-file"%>
+            <div id="image-esa-preview">
+              <%= image_tag @esa.second_section_img.url, width: "200"%>
+            </div>
+          <% end %>
+        </div>
+      </div>
+      <legend>Congratulations message</legend>
+      <div class="form-group">
+        <div id="menu_hash" class="col-sm-3 col-sm-offset-1 col-sm-push-7">
+          Select Tag: <i id ="example"class="glyphicon glyphicon-question-sign" data-container="body" data-toggle="popover" data-placement="right" data-content="These tags will be replaced by the values of the recommendation."></i>
+          <div id= "energy_value" class="hash_buttons">
+            [recommendation_energy_value]
+          </div>
+          <div id= "recommendation_items" class=" hash_buttons">
+            [recommendation_items]
+          </div>
+          <div id= "area_items" class=" hash_buttons">
+            [area_items]
+          </div>
+        </div>
+        <%= f.label :congratulations_message, "Message", class: "col-sm-2 col-sm-pull-4 control-label" %>
+        <%= set_label_obligatory(Esa.null?('congratulations_message')) %>
+        <div class="col-sm-5 col-sm-pull-4">
+          <%= f.text_area :congratulations_message, class: "form-control validate[#{set_validate(Esa.null?("congratulations_message"))}] wysihtml5",id: "congratulations_message" %>
+        </div>
+      </div>
+      <legend>Petition</legend>
+      <div class="form-group">
+        <%= f.label :petition_link, class: "col-sm-2 control-label" %>
+        <%= set_label_obligatory(false) %>
+        <div class="col-sm-8">
+          <%= f.text_field :petition_link, :value => (@esa.petition_link || "http://"), class: "form-control validate[#{set_validate(false)},custom[url]]" %>
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="col-lg-offset-2 col-lg-8">
+          <%= render partial: "buttons" %>
+        </div>
+      </div>
+    </fieldset>
+  <% end %>
+</div>
+
+<script type="text/javascript">
+  $('#example').popover();
+
+  var finalString = "";
+
+  $('.hash_buttons').click(function() {
+    finalString = $('#congratulations_message').data("wysihtml5").editor.getValue();
+
+    var mstring = "";
+    if($(this).attr("id") == "energy_value"){
+      mstring = "[energy_value]"
+    }else if($(this).attr("id") == "recommendation_items"){
+      mstring = "[recommendation_items]"
+    }else{
+      mstring = "[area_items]"
+    }
+
+    finalString = finalString +""+mstring
+      $('#congratulations_message').data("wysihtml5").editor.setValue(finalString);
+  });
+</script>

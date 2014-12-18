@@ -1,0 +1,20 @@
+// Place all the styles related to the Front::Shopping controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+.shopping_comment{
+	text-align: left;
+}
+
+.link_to_amazon{
+	text-decoration: underline;
+}
+
+
+
+@media screen and (max-width: 768px) {
+	.quantity{
+	 width:100%;
+	 }
+
+}

@@ -1,0 +1,50 @@
+<ul class="nav nav-pills user-menu" role="tablist">
+	<li role="presentation">
+		<%= link_to [:front, @esa, :areas] do%>
+			<% if @action == "show"%>
+				<%= image_tag("areas_selected.png") %>
+			<% else %>
+				<%= image_tag("areas.png") %>
+			<%end%>
+		<% end %>
+	</li>
+	<li role="presentation">
+		<% unless @recommendation_user.nil? %>
+			<%= link_to [:purchase, :front, @recommendation_user] do%>
+				<% if @action == "purchase" %>
+					<%= image_tag("shopping_selected.png") %>
+				<%else %>
+					<%= image_tag("shopping.png") %>
+				<%end%>
+			<% end %>
+		<% else %>
+			<a href="#"><%= image_tag("shopping.png")  %></a>
+		<% end %>
+	</li>
+	<li role="presentation">
+		<% unless @recommendation_user.nil? %>
+			<%= link_to [:steps, :front, @recommendation_user] do%>
+				<% if @action == "steps" %>
+					<%= image_tag("steps_selected.png") %>
+				<%else %>
+					<%= image_tag("steps.png") %>
+				<%end%>
+			<% end %>
+		<% else %>
+			<a href="#"><%= image_tag("steps.png") %></a>
+		<% end %>
+	</li>
+	<li>
+		<% unless @recommendation_user.nil? %>
+			<%= link_to [:share, :front, @recommendation_user] do%>
+				<% if @action == "share" %>
+					<%= image_tag("petition_selected.png") %>
+				<%else %>
+					<%= image_tag("petition.png") %>
+				<%end%>
+			<% end %>   
+		<% else %>
+			<a href="#"><%= image_tag("petition.png") %></a>
+		<% end %>       
+	</li>
+</ul>

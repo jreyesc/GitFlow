@@ -1,0 +1,13 @@
+<%= render partial: "title", locals: { title: 'Your energy saving actions' } %>
+
+<div class="row row-offset text-center" >
+	<% @esas.each do |esa| %>
+		<%= link_to [:front, esa] do%>
+			<div class="esa_style col-xs-10 col-md-4 col-xs-offset-1 col-md-offset-1" >
+				<div class="esa_image" style="background-image: url(<%= esa.main_image.url %>);"></div>
+				<h1><small><%= esa.title %></small></h1>
+			</div>
+		<% end %>
+		<div class="col-xs-1" ></div>
+	<% end %>
+</div>

@@ -1,0 +1,112 @@
+<% if @areas.size > 1 %>
+	<%= render partial: "cmb_title", locals: { recommendation: @recommendation_user, recommendations: @recommendations, route: 'purchase' } %>
+<% else %>
+	<%= render partial: "title", locals: { title: @area.title } %>
+<% end %>
+
+<%= render partial: "subtitle", locals: { subtitle: 'Your need:' } %>
+
+<form method="GET" action="http://www.amazon.com/gp/aws/cart/add.html" target="_blank">
+	<input type="hidden" name="AWSAccessKeyId" value="AKIAIONX2UEBBTHQXHUQ" />
+	<% @recommendation_items.each_with_index do |recommendation, index| %>
+		<input type="hidden" name="ASIN.<%= index+1 %>" value="<%= recommendation.amazon_code %>"/>
+		<div id = "to_delete_<%= index+1 %>">
+			<div class="row">
+				<%= link_to [:steps, :front, @recommendation_user], class: "clean" do %>
+					<div class="section border-top white">
+						<div class="col-xs-4 col-xs-offset-1 col-md-offset-1">
+							<%= image_tag recommendation.image_url, :class => "img_section_esa" %>
+						</div>
+						<div class="col-xs-6">
+							<%= recommendation.title %><br><br>
+							<% unless recommendation.price.nil? %>
+								Price: <%= recommendation.price.html_safe %> <br> <br>
+							<% end %>
+							<%= recommendation.features.html_safe %><br><br>
+							<a class= "link_to_amazon" href="http://www.amazon.com/dp/<%= recommendation.amazon_code %>">More Info</a>
+						</div>
+					</div>
+				<% end %>
+			</div>
+			<div class="row text-center white">
+				<div class="col-xs-6 border-right tip-feature">
+					Quantity <input class="quantity" type="number" name="Quantity.<%=index+1%>" value = 1 />
+				</div>
+				<div class="col-xs-6 tip-feature">
+					<div class="btn btn-default delete_product" onclick="return removeDummy(<%=index+1%>);">
+						Delete
+					</div>
+				</div>
+			</div><br>
+		</div>
+	<% end %>
+	<div class="row">
+		<div class="col-xs-4">
+			<div class="btn btn-default btn-block" data-toggle="modal" data-target="#myModal">
+				Email List
+			</div>
+		</div>
+		<div class="col-xs-8">
+			<input id="btn_amazon" type="submit" name="add" value="Add all to amazon cart" class="btn btn-primary btn-block application_buttons" />
+		</div>
+	</div>
+</form>
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+				<h4 class="modal-title" id="myModalLabel">Send List to Email</h4>
+			</div>
+			<%= form_for [:send_mail, :front, @recommendation_user], method: 'post' do |f| %>
+				<%= hidden_field_tag(:recommendation_id, @recommendation.id) %>
+				<div class="modal-body">
+					<div class="row">
+						<div class="col-xs-10 col-xs-offset-1 col-sm-6 col-sm-offset-3 col-md-6 col-md-offset-3 col-lg-6 col-lg-offset-3">
+							Email<br />
+							<%= email_field_tag :email, "", :autofocus => true, :class => "form-control", :placeholder => "Email", :required => "" %>
+						</div>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+					<%= submit_tag "Send List", id: 'commit', class: 'btn btn-primary' %>
+				</div>
+			<% end %>
+		</div>
+	</div>
+</div>
+
+<script type="text/javascript">
+	var eventposted=0;
+
+	$(document).ready(function(){
+		$('#btn_amazon').click(function() {
+			window.setInterval(foo, 100);
+		});
+		$('#commit').click(function(e) {
+			if ($('#email').val() != ''){
+				e.preventDefault();
+				$.ajax({
+					type: "post",
+					url: "<%= send_mail_front_recommendation_by_user_path(@recommendation_user) %>",
+					data: {
+						email: $("#email").val()
+					},
+					dataType: "json",
+					async: true
+				}).done(function (){
+					window.setInterval(foo, 100);
+				});
+			}
+		});
+	});
+
+	function foo(){
+		if(eventposted == 0){
+			window.location.href = '<%= steps_front_recommendation_by_user_path(@recommendation_user) %>';
+			eventposted = 1
+		}
+	}
+</script>

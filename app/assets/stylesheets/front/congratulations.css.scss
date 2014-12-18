@@ -1,0 +1,38 @@
+// Place all the styles related to the front::congratulations controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+#message_header{
+	background-color: rgb(247,247,247);
+	color: rgb(98,97,102);
+	font-size: 1.3em;
+	margin-bottom: 15px;
+}
+
+.section_border{
+	border-top:1px solid #A8A8A8 ;
+	border-bottom: 1px solid #A8A8A8 ;
+	margin-bottom:40px;
+}
+
+.center{
+    margin-left: auto;
+    margin-right: auto;
+    width: 70%;
+}
+
+.title_congratulations{
+	color: #336699;
+	font-size: 2em;
+	margin-left: auto;
+    margin-right: auto;
+    width: 180px;
+}
+
+.body_text{
+	font-family:  "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+.button_see_next_lesson{
+	margin: 25px;
+}

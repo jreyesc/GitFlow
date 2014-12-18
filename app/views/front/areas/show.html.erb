@@ -1,0 +1,35 @@
+<% if @recommendations.blank?
+	title = "#{@area.title} 1"
+else
+	title = "#{@area.title} #{@recommendations.count + 1}"
+	end %>
+<%= render partial: "title", locals: { image: @area.icon_image, title: title } %>
+
+<div class="row"><div class="col-xs-12 text-center">
+	<h2>Which of these are here?</h2>
+</div></div>
+<%= render partial: "alert_messages" %>
+<div class="row">
+	<div class="col-xs-12 col-md-4 col-md-offset-4">
+		<% index = '0' %>
+		<%= form_for([:create, :front, @esa, @area], method: 'post', :html => {role: "form", :class => 'send_email'}) do |f| %>
+			<% @items.each do |item| %>
+				<%= render partial: "front/areas/item", locals: { item: item, index: index, expanded: 0 } %>
+			<% end %>
+			<% if @area.reachability %>
+				<div class='checkbox'>
+					<label>
+						<%= check_box_tag :reachability, true, false, class: 'send_email'%>Is the outlet easy to reach?
+					</label>
+				</div>
+			<% end %>
+			<div id="hidden_values">
+			</div>
+			<br>
+			<%= submit_tag "Done" , class: 'btn btn-primary col-xs-10 col-md-4 col-xs-offset-1 col-md-offset-4', :onclick => "return validateForm();" %>
+		<% end %>
+	</div>
+</div>
+<br>
+<div class="content_alert"></div>
+<br>

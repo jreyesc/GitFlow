@@ -1,0 +1,85 @@
+<% str_method = @int_page_type == 2 ? 'put' : 'post'%>
+<% str_path = @int_page_type == 2 ? admin_recommendation_path : admin_recommendations_path %>
+
+<div class="row">
+  <%= nested_form_for(@recommendation, url: str_path, method: str_method, html: {id: "form_recommendation", class: "form-horizontal", role: "form"}) do |f| %>
+    <fieldset>
+      <legend>Goal</legend><br>
+      <% unless @area.nil? %>
+        <%= f.hidden_field :area_id, value: @area.id %>
+      <% end %>
+      <%= f.hidden_field :total_saving %>
+      <%= f.hidden_field :total_sockets %>
+      <div class="form-group">
+        <%= f.label :goal_text, class: "col-sm-2 control-label" %>
+        <%= set_label_obligatory(false) %>
+        <div class="col-sm-8">
+          <%= f.text_area :goal_text, class: "form-control validate[#{set_validate(false)}] wysihtml5" %>
+        </div>
+      </div>
+      <div class="form-group">
+        <%= f.label :goal_image, "Image", class: "col-sm-2 control-label" %>
+        <%= set_label_obligatory(false) %>
+        <div class="col-sm-8">
+          <% if @int_page_type == 0 %>
+            <%= f.file_field :goal_image , class: "validate[#{set_validate(false)}] nested-file"%>
+          <% else %>
+            <%= f.file_field :goal_image , class: " nested-file"%>
+            <div id="image-recommendation-preview">
+              <%= image_tag @recommendation.goal_image.url, width: "200"%>
+            </div>
+          <% end %>
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+          <div class="checkbox">
+            <label>
+              <%= f.check_box :reachability %> Easy to reach
+            </label>
+          </div>
+        </div>
+      </div>
+      <legend>Energy range</legend><br>
+      <div class="form-group">
+        <%= f.label :min_energy, class: "col-sm-2 col-sm-offset-1 control-label" %>
+        <div class="col-sm-2">
+          <%= f.text_field :min_energy, class: "form-control validate[#{set_validate(false)}]" %>
+        </div>
+        <%= f.label :max_energy, class: "col-sm-2 col-sm-offset-1 control-label" %>
+        <div class="col-sm-2">
+          <%= f.text_field :max_energy, class: "form-control validate[#{set_validate(false)}]" %>
+        </div>
+      </div>
+      <legend>Items</legend>
+      <div class="form-group">
+        <%= f.fields_for :recommendation_items do |builder| %>
+          <%= render "fields_for_recommendation_item", :f => builder %>
+        <% end %>
+        <%= f.link_to_add '<i class="glyphicon glyphicon-plus"></i> Add'.html_safe, :recommendation_items, class: 'col-sm-2 col-sm-offset-10' %>
+      </div>
+      <br>
+      <div class="form-group">
+        <%= render partial: "buttons" %>
+      </div>
+    </fieldset>
+  <% end %>
+</div>
+<script>
+  $(document).on("change", ".recommendation_saving", function () {
+    var sum = 0;
+
+    $('.recommendation_saving').each(function(i,val){
+      sum = sum + Number($(val).val());
+      $('#recommendation_total_saving').val(sum);
+    })
+  });
+  $(document).on("change", ".recommendation_item_sockets", function () {
+    var sum = 0;
+
+    $('.recommendation_item_sockets').each(function(i,val){
+      sum = sum + Number($(val).val());
+      $('#recommendation_total_sockets').val(sum);
+    })
+  });
+</script>

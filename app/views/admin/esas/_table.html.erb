@@ -1,0 +1,29 @@
+<% if @esas.length > 0 %>
+  <table class="table table-striped" id="sortable">
+    <thead>
+      <tr>
+        <th>Title</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% for esa in @esas %>
+        <tr data-item-id="<%= esa.id %>" class="item">
+          <td><%= esa.title %></td>
+          <td class="btn-rud">
+            <%= link_to '<i class="glyphicon glyphicon-search"></i>'.html_safe, admin_esa_path(esa), class: "btn btn-default btn-show", data: {toggle: "tooltip"}, title: "View" %>
+            <%= link_to '<i class="glyphicon glyphicon-pencil"></i>'.html_safe, edit_admin_esa_path(esa), {class: "btn btn-default btn-edit", data: {toggle: "tooltip"}, title: "Edit"} %>
+             <%= link_to '<i class="glyphicon glyphicon-asterisk"></i>'.html_safe, admin_esa_areas_path(esa), {class: "btn btn-default btn-edit", data: {toggle: "tooltip"}, title: "Areas"} %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+  <script>
+    $(document).ready(esas_sorted)
+    $(document).on('page:load', esas_sorted)
+  </script>
+  <%= actions_tooltip %>
+<%else%>
+  <p>No ESAS found</p>
+<%end%>

@@ -1,0 +1,26 @@
+<% if @areas.size > 1 %>
+	<%= render partial: "cmb_title", locals: { recommendation: @recommendation_user, recommendations: @recommendations, route: 'steps' } %>
+<% else %>
+	<%= render partial: "title", locals: { title: @area.title } %>
+<% end %>
+
+<%= render partial: "subtitle", locals: { subtitle: 'Your actions:' } %>
+
+<% @steps.each_with_index do |step, index|  %>
+	<div class="row step white">
+		<div class="circle">
+			<%= index+1 %>
+		</div>
+		<%= step['description'].html_safe %>
+	</div>
+<% end %>
+<div class="row step"></div>
+<div class="row">
+	<div class="col-xs-12 col-md-6 col-md-offset-3">
+		<%= link_to [:share, :front, @recommendation_user] do%>
+			<div class="btn btn-primary btn-block btn_submit">
+				Finish here!
+			</div>
+		<% end %>
+	</div>
+</div>

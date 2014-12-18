@@ -1,0 +1,10 @@
+<%case @int_page_type %>
+	<% when 0 %>
+  		<%= submit_tag("Save", disable_with: "Saving", class: "btn btn-primary")%>          
+	<% when 1 %>
+		<%= link_to "Edit", edit_admin_step_path(@step), class: "btn btn-primary" %>
+	<%else%>
+  		<%= submit_tag("Save", disable_with: "Saving", class: "btn btn-primary") %>
+  		<%= submit_tag("Undo changes", type: "reset", class: "btn btn-default") %>
+<%end%>
+<%= link_to "Cancel", admin_recommendation_steps_path(@recommendation), class: "btn btn-default"%>

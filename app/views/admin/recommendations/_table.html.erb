@@ -1,0 +1,36 @@
+<% unless @area.nil? %>
+  <div class="row">
+    <div class="pull-right col-xs-12 col-md-2 text-center">
+      <%= link_to  "New recommendation",new_admin_area_recommendation_path(@area), class: "btn btn-primary" %>
+    </div>
+  </div>
+  <br>
+  <% if @recommendations.size > 0 %>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Title</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% for recommendation in @recommendations %>
+          <tr>
+            <td><%= recommendation.goal_text.html_safe %></td>
+            <td class="btn-rud">
+              <%= link_to '<i class="glyphicon glyphicon-search"></i>'.html_safe, admin_recommendation_path(recommendation), class: "btn btn-default btn-show", data: {toggle: "tooltip"}, title: "View" %>
+              <%= link_to '<i class="glyphicon glyphicon-pencil"></i>'.html_safe, edit_admin_recommendation_path(recommendation), {class: "btn btn-default btn-edit", data: {toggle: "tooltip"}, title: "Edit"} %>
+              <a class='btn btn-default btn-remove' data-confirm="Do you want to delete: <%= recommendation.goal_text %>?" data-method='delete' data-toggle='tooltip' href="<%= admin_area_recommendation_path(recommendation.area, recommendation) %>" rel='nofollow' title='Delete' data-original-title='Delete'>
+                <i class='glyphicon glyphicon-remove'></i>
+              </a>
+              <%= link_to '<i class="glyphicon glyphicon-asterisk"></i>'.html_safe, admin_recommendation_steps_path(recommendation), {class: "btn btn-default btn-edit", data: {toggle: "tooltip"}, title: "Items"} %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+    <%= actions_tooltip %>
+  <%else%>
+    <p>No Recommendations found</p>
+  <%end%>
+<%end%>

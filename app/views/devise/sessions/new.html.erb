@@ -1,0 +1,50 @@
+	<%= form_for(resource, :as => resource_name, :url => session_path(resource_name), :html => {:class=>""}) do |f| %>
+		<fieldset class="title_border">
+
+			<div id="legend_container">
+				<legend class="title_border">Sign In</legend>
+			</div>
+
+				<div class="form-signin">
+					<div>	
+						<div class="row">
+				  			<div class="col-xs-10 col-xs-offset-1 col-sm-6 col-sm-offset-3 col-md-6 col-md-offset-3 col-lg-6 col-lg-offset-3">
+				  				<%= f.email_field :email, :autofocus => true, :class => "form-control", :placeholder => "Email", :required => "" %>
+							
+				  			</div>
+						</div>
+						
+						<div class="row">
+				  			<div class="col-xs-10 col-xs-offset-1 col-sm-6 col-sm-offset-3 col-md-6 col-md-offset-3 col-lg-6 col-lg-offset-3">
+				  				<%= f.password_field :password, :class => "form-control", :placeholder => "Password", :required => "" %>				
+				  			</div>
+						</div>
+
+						
+						<div class="row">
+				  			<div class="col-xs-10 col-xs-offset-1 col-sm-6 col-sm-offset-3 col-md-6 col-md-offset-3 col-lg-6 col-lg-offset-3">
+				  					<% if devise_mapping.rememberable? -%>
+										<label class="checkbox">
+											<%= f.check_box :remember_me %> <%= t("login.remember_me") %>
+										</label>
+									<% end %>			
+				  			</div>
+						</div>
+
+
+						<div class="row">
+				  			<div class="col-xs-10 col-xs-offset-1 col-sm-6 col-sm-offset-3 col-md-6 col-md-offset-3 col-lg-6 col-lg-offset-3">
+								<div><%= f.submit "Log in", :class => "btn btn-primary btn-lg btn-block" %></div>
+
+							</div>
+						</div>
+
+						<div class="row">
+				  			<div class="col-xs-10 col-xs-offset-1 col-sm-6 col-sm-offset-3 col-md-6 col-md-offset-3 col-lg-6 col-lg-offset-3">
+								<%= render "devise/shared/links" %>
+							</div>
+						</div>
+					</div>
+				</div>	
+		</fieldset>
+	<% end %>

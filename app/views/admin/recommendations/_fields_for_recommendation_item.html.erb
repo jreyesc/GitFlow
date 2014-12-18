@@ -1,0 +1,32 @@
+<div class="recommendation_item col-sm-10 col-sm-offset-1">
+	<br>
+	<div class="form-group">
+		<div class="pull-right col-sm-1">
+			<%= f.link_to_remove '<i class="glyphicon glyphicon-remove"></i>'.html_safe unless @int_page_type == 1%>
+		</div>
+	</div>
+	<div class="form-group">
+		<%= f.label :comment, class: "col-sm-2 control-label" %>
+		<%= set_label_obligatory(false) %>
+		<div class="col-sm-9">
+			<%= f.text_field :comment, class: "form-control validate[#{set_validate(false)}]" %>
+		</div>
+	</div>
+	<div class="form-group">
+		<%= f.label :save_percentage, class: "col-sm-2 col-sm-offset-1 control-label" %>
+		<div class="col-sm-3">
+			<%= f.number_field :save_percentage, class: "recommendation_saving form-control validate[#{set_validate(false)}]", step: 'any', min: 0, max: 100 %>
+		</div>
+		<%= f.label :sockets, class: "col-sm-2 control-label" %>
+		<div class="col-sm-3">
+			<%= f.number_field :sockets, class: "recommendation_item_sockets form-control validate[#{set_validate(false)}]" %>
+		</div>
+	</div>
+	<div class="form-group">
+		<%= f.label :amazon_code, class: "col-sm-2 col-sm-offset-1 control-label" %>
+		<div class="col-sm-3">
+			<%= f.text_field :amazon_code, class: "form-control validate[#{set_validate(false)}]", :required => "" %>
+		</div>
+	</div>
+	<br>
+</div>

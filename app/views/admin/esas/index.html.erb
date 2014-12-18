@@ -1,0 +1,15 @@
+<legend class="title_border"> <%= title "ESA" %> </legend>
+
+<%= render partial: "alert_messages" %>
+
+<div class="row">
+  <div class="pull-right col-xs-12 col-md-2 text-center">
+    <%= link_to  "New ESA", new_admin_esa_path , class: "btn btn-primary" %>
+  </div>
+</div>
+<br>
+<div class="row">
+  <div id="table" class="col-md-12">
+    <%= render partial: "table" %>
+  </div>
+</div>

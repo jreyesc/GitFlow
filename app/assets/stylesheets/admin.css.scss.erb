@@ -1,0 +1,289 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, vendor/assets/stylesheets,
+ * or vendor/assets/stylesheets of plugins, if any, can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the top of the
+ * compiled file, but it's generally better to create a new file per style scope.
+ *
+ *= require 'reset'
+ *= require 'wysiwyg-color'
+ *= require_self
+ *= require jquery-ui
+ *= require jquery-ui/sortable
+ *= require_tree ./admin
+ *= require validationEngine.jquery
+ *= require bootstrap
+ *= require bootstrap-datepicker
+ *= require bootstrap-wysihtml5
+ */
+
+body{
+	color: #444;
+}
+
+h1, h2, h3, h4{
+	padding: 5px 7px;
+}
+
+h1{
+	font-size: 28px;
+}
+
+h2{
+	font-size: 24px;
+}
+
+h3{
+	font-size: 20px;
+}
+
+h4{
+	font-size: 16px;
+}
+
+p, span, strong{
+	font-size: 16px;
+}
+
+small{
+	font-size: 14px;
+}
+
+strong{
+	font-weight: bold;
+}
+
+
+
+/* ------------------- */
+
+/* ----- helpers ----- */
+
+.inline-flex{
+	display: inline-flex;
+}
+
+/* ------------------- */
+
+/* ----- content ----- */
+
+
+
+#header{
+	color:#fff;
+	border-bottom:1px solid #000;
+	background: #000; /* Old browsers */
+}
+
+.header_container{
+	height: 70px;
+}
+
+#header .logo{
+	text-align: center;
+	vertical-align: middle;
+	width: 184px;
+	margin-top: 3px;
+}
+
+#header #logo span{
+	color:#eee;
+}
+
+.header_container ul li a {
+	padding-top: 10px;
+	color: white;
+}
+.active {
+	color: #428bca !important;
+}
+
+.active a{
+	color: #428bca !important;
+}
+
+.header_container ul li a:hover {
+	background: #000;
+	color: #428bca;
+}
+
+.header_container ul li {
+	list-style-position: inside;
+	border-right: 1px solid white;
+	padding-right: 6px;
+}
+
+#languages{
+	border-right: 0px;
+	padding-top: 9px;
+	a, span{
+		display: inline;
+	}
+	a{
+		vertical-align: top;
+	}
+	.english{
+		padding-right: 0px;
+	}
+	.spanish{
+		padding-left: 0px;
+	}
+	span{
+		padding-top: 10px;
+	}
+}
+
+#social{
+	text-align: right;
+	padding-right: 20px;
+	margin-top: 13px;
+	margin-bottom: 13px;
+	padding: 10px;
+	width: 270px; 
+	height: 78px;
+}
+
+#social a{
+	display: inline-block;
+	vertical-align: top;
+}
+
+.login_container {
+	background-color: #ACB3E9;
+	border-top-right-radius: 7px;
+	border-bottom-right-radius: 7px;
+	margin-top: 13px;
+	margin-bottom: 13px;
+	padding: 10px;
+	width: 270px; 
+	height: 78px;
+}
+
+#sign_in_container{
+	border: 1px solid;
+	border-radius: 28px;
+	margin-top: 39px;
+	border-color: #BCBCBC;
+	-webkit-box-shadow: -1px 4px 16px 0px rgba(49, 45, 45, 0.46);
+	-moz-box-shadow:    -1px 4px 16px 0px rgba(49, 45, 45, 0.46);
+	box-shadow:         -1px 4px 16px 0px rgba(49, 45, 45, 0.46);
+}
+
+.btn_bundle{
+	background: url(<%= asset_path 'btn_bundle.png' %>) no-repeat;
+	width: 147px;
+	height: 57px;
+	border: 0px;
+	text-align: center;
+	padding-bottom: 18px;
+	color: white;
+}
+
+.btn_bundle:hover{
+   background: url(<%= asset_path 'btn_bundle_hover.png' %>) no-repeat;
+ }	
+
+.a_bundle{
+	background: url(<%= asset_path 'btn_bundle.png' %>) no-repeat;
+	padding-top: 10px;
+	width: 149px;
+	height: 56px;
+	text-align: center;
+	color: white;
+	display: inline-block;	
+
+}
+
+.a_bundle:hover{
+   background: url(<%= asset_path 'btn_bundle_hover.png' %>) no-repeat;
+	 color: white;
+   text-decoration: none;
+ }	
+
+	.btn_login{
+			margin-left: 28%;
+	}
+
+	.forgot{
+		margin-left: 85px;	
+	}
+
+	.table-striped > tbody > tr:nth-child(2n+1) > td, .table-striped > tbody > tr:nth-child(2n+1) > th {
+	   background-color: #E0E0E0 ;
+	}
+
+
+	/* ----------------- */
+
+	/* ----- yield ----- */
+
+	/* ----------------- */
+
+	footer#bottom{
+		height: 40px;
+		color: #ccc;
+		font-size: 11px;
+		background: #2c2c2c;
+		padding: 20px 0;
+		min-width: 960px;
+		background: -webkit-gradient(linear,0 0,0 bottom,from(#2c2c2c),to(#222));
+		background: -moz-linear-gradient(#2c2c2c,#222);
+		background: linear-gradient(#2c2c2c,#222);
+		-pie-background: linear-gradient(#2c2c2c,#222);
+	}
+
+	.search-input{
+		height: 42px;
+	}
+
+	.icon-bar{
+		background-color: white;
+	}
+
+	.nested-file{
+		width: 180px;
+	}
+
+     .look-file{
+		width: 200px;
+	}
+
+	.logout{
+		padding-left: 0px; 
+		width: 76px;
+	}
+
+	.div-input-left{
+		padding-left: 0px;
+		margin-bottom: 10px;
+	}
+
+.table-action-image{
+	width: 30px;
+	height: 30px;
+}
+
+th{
+	font-weight: bold;
+	background-color: black;
+	color: white;
+}
+
+.item{
+	cursor:row-resize;
+	border: 2px solid #ccc;
+}
+
+.active-item-shadow{
+	bacground-color: black;
+	border: 2px solid #ccc;
+	border-radius: 10px;
+	opacity: 0.2;
+}
+
+table{
+	bacground-color: black;
+}

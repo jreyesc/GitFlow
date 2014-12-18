@@ -1,0 +1,53 @@
+<% if @areas.size > 1 %>
+	<%= render partial: "cmb_title", locals: { recommendation: @recommendation_user, recommendations: @recommendations, route: nil } %>
+<% else %>
+	<%= render partial: "title", locals: { title: @area.title } %>
+<% end %>
+
+<%= render partial: "subtitle", locals: { subtitle: 'Your goal here:' } %>
+
+<div class="row">
+	<%= link_to [:steps, :front, @recommendation_user], class: "clean" do %>
+		<div class="section border-top white">
+			<div class="col-xs-4 col-xs-offset-1 col-md-offset-1">
+				<%= image_tag @recommendation.goal_image.url, :class => "img_section_esa" %>
+			</div>
+			<div class="col-xs-6" style="text-align:center">
+				<%= @recommendation.goal_text.html_safe %>
+			</div>
+		</div>
+	<% end %>
+</div>
+<div class="row text-center white">
+	<div class="col-xs-12 tip-feature">
+		<p style="margin-bottom: 2px">Savings</p>
+		<p style="margin-bottom: 5px"><%= @total_saving %> kWh/year</p>
+	</div>
+</div>
+<div class="row" style="margin-top: 5px">
+	<div class="col-xs-6 col-md-6">
+		<%= link_to [:purchase, :front, @recommendation_user] do %>
+			<div class="btn btn-default btn-block">
+				Go Shopping
+			</div>
+		<% end %>
+	</div>
+	<% if @esa.areas.size == 1 %>
+		<div class="col-xs-6">
+			<%= link_to [:steps, :front, @recommendation_user] do %>
+				<div class="btn btn-primary btn-block">
+					Continue
+				</div>
+			<% end %>
+		</div>
+	<% else %>
+		<div class="col-xs-6">
+			<%= link_to [:front, @area.esa, :areas] do %>
+				<div class="btn btn-primary btn-block">
+					Add another area
+				</div>
+			<% end %>
+		</div>
+	<% end %>
+</div>
+<br>

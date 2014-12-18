@@ -1,0 +1,30 @@
+<%= render partial: "layouts/menu_panel" %>
+<br>
+<div class="row" ><div class="col-xs-12 text-center">
+  <h2><%= @esa.areas_message.html_safe unless @esa.areas_message.nil? %></h2>
+</div></div>
+
+<% @areas.each do |area| %>   
+  <br>
+  <div class="row">
+    <div class="col-xs-10 col-xs-offset-1 col-md-6 col-md-offset-3">
+      <%= link_to [:front, @esa, area] do %>
+        <div class="btn btn-primary btn-lg btn-block">
+          Add <%= area.title %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+<% end %>
+<br>
+<% if !@recommendations.nil? && @recommendations.length > 0 %>
+  <div class="row text-center"><b>Already added:</b><br></div>
+    <% @recommendations.each do |a| %>
+      <div class="row text-center">
+        <%= link_to [:front, a.area.esa, a.area, a], role: "menuitem", tabindex: "-1", class: 'clean' do %>
+          <u style="color:#666"><%= a.area.title %> <%= a.name %></u>
+        <% end %>
+      </div>
+    <% end %>
+<% end %>
+<br>

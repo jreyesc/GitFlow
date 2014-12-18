@@ -1,0 +1,1 @@
+$('#recommendation_id').html("<%= escape_javascript(options_for_select(@recommendations.map{|recommendation| [recommendation.title,recommendation.id]}.insert(0,['Select recommendation', '']))) %>");

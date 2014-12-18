@@ -1,0 +1,11 @@
+<legend class="title_border"><%= title "Edit ESA type" %></legend>
+
+<%= render partial: "alert_messages" %>
+
+<div id="table" class="row">
+	<div class="col-md-12">
+		<%= render partial: "form" %>
+	</div>
+</div>
+
+<%= render partial: "validation", locals: {form_id: 'form_esa_type'} %>

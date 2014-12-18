@@ -1,0 +1,1 @@
+$('#area_id').html("<%= escape_javascript(options_for_select(@areas.map{|area| [area.title,area.id]}.insert(0,['Select area', '']))) %>");
